@@ -19,14 +19,46 @@ const obtenerIdVenta = () => {
     return IdVenta;
 };
 
+const controlVenta = (dia, mes, anio, vendedora, sucursal, componentes) => {
+    if ((dia == undefined) || (mes == undefined) || (anio == undefined) || 
+     (vendedora == undefined) || (sucursal == undefined) || (componentes == undefined)){
+        throw "Deben completarse todos los datos de la venta."
+    }
+};
+
+const controlVendedora = (Vendedora) =>{
+    for (let index of vendedoras){
+        return index == Vendedora;
+    }
+        throw "Vendedor no registrado.";
+
+};
+
+/*const controlFecha = (dia, mes, anio) => {
+    let hoy = newDate();
+    let anioHoy = hoy.getFullYear();
+    let mesHoy = hoy.getMonth();
+    let diaHoy = hoy.getDay();
+
+    if (anio <= anioHoy){
+        return anio;
+    }else if ()
+    throw "La fecha introducida es mayor a hoy."
+};*/
+
 const agregarVenta = (dia, mes, anio, vendedora, sucursal, componentes) => {
+    controlVenta(dia, mes, anio, vendedora, sucursal, componentes);
+    //controlFecha(dia, mes, anio);
+    controlVendedora(vendedora);
+    let vendedoraCapital = vendedora.charAt(0).toUpperCase() + vendedora.slice(1);
+    let sucursalCapital = sucursal.charAt(0).toUpperCase() + sucursal.slice(1);
     return ventas.push([
         obtenerIdVenta(),
         dia,
         mes,
         anio,
-        vendedora,
-        sucursal,
+        vendedoraCapital,
+        sucursalCapital,
         [componentes]
     ])
 };
