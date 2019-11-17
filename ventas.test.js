@@ -69,6 +69,10 @@ test ('chequear que todos los parametros esten completos', () => {
     expect (()=>{agregarVenta()}).toThrow('Deben completarse todos los datos de la venta.')
 });
 
+test ('chequear que todos los parametros esten completos - version 2', () => {
+    agregarVenta(3,2,2017, "ada", "caballito","" );
+    expect (()=>{agregarVenta()}).toThrow('Deben completarse todos los datos de la venta.')
+});
 
 
 /*test.todo ('chequear que la fecha no superea al dia de hoy', () => {

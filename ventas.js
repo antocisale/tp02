@@ -20,18 +20,21 @@ const obtenerIdVenta = () => {
 };
 
 const controlVenta = (dia, mes, anio, vendedora, sucursal, componentes) => {
-    if ((dia == undefined) || (mes == undefined) || (anio == undefined) || 
-     (vendedora == undefined) || (sucursal == undefined) || (componentes == undefined)){
+    if ((dia === undefined) || (mes === undefined) || (anio === undefined) || 
+     (vendedora === undefined) || (sucursal === undefined) || (componentes === undefined)){
         throw "Deben completarse todos los datos de la venta."
-    }
+    };
 };
 
-const controlVendedora = (Vendedora) =>{
+const controlVendedora = (vendedor) =>{
     for (let index of vendedoras){
-        return index == Vendedora;
+        return index == vendedor;
     }
+    if(index == false){
         throw "Vendedor no registrado.";
-
+    } else{
+        return index;
+    }
 };
 
 /*const controlFecha = (dia, mes, anio) => {
@@ -47,9 +50,9 @@ const controlVendedora = (Vendedora) =>{
 };*/
 
 const agregarVenta = (dia, mes, anio, vendedora, sucursal, componentes) => {
-    controlVenta(dia, mes, anio, vendedora, sucursal, componentes);
-    //controlFecha(dia, mes, anio);
+    //controlVenta(dia, mes, anio, vendedora, sucursal, componentes);
     controlVendedora(vendedora);
+    //controlFecha(dia, mes, anio);
     let vendedoraCapital = vendedora.charAt(0).toUpperCase() + vendedora.slice(1);
     let sucursalCapital = sucursal.charAt(0).toUpperCase() + sucursal.slice(1);
     return ventas.push([
