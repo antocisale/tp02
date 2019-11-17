@@ -21,6 +21,7 @@ test ('obtengo un ID de venta random', ()=>{
 describe ('pruebas en agregar venta sin numero random', ()=>{
     beforeEach(() => {
         jest.spyOn(global.Math, 'random').mockReturnValue(0.123456789);
+        localPc.ventas = [];
     });
     
     afterEach(() => {
@@ -52,5 +53,11 @@ test ('agrego una venta', () =>{
     expect (ventas [0][6]).toStrictEqual(['Monitor GPRS 3000']);
 });
 
-
+test.todo('chequear mayusculas en parametros de agregar venta');
+test.todo('chequear que todos los parametros esten completos');
+test.todo('chequear que la fecha no superea al dia de hoy');
+test.todo('chequear que el push permita subir varios productos en una misma venta');
+test.todo('chequear que el parametro nombre coincida con una vendedora, sino tire error');
+test.todo('chequear que el parametro sucursal coincida con una existente, sino tire error');
+test.todo('chequear que el parametro componente coincida con una en el stock, sino tire error');
 
