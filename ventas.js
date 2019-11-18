@@ -53,15 +53,29 @@ const cantidadVentasComponente = (componente) => {
 
 /* Funcion 2.1 */
 
-const componenteMasVendido = ()
+const componenteMasVendido = () => {
+    let mayor = 0
+    let nombre = " "
+    precios.forEach(item => {
+        const componenteVendido = cantidadVentasComponente(item[0]);
+        if (componenteVendido > mayor) {
+            mayor = componenteVendido
+            nombre = item[0]
+        }
+    })
+    return nombre
+}
 
 /* Funcion 3 */
 
+
+/*Funcion 7 */
 const obtenerIdVenta = () => {
     let IdVenta = Math.floor(Math.random() * (1000000000 - 100000000) + 100000000);
     return IdVenta;
 };
 
+/*Funcion  7.1 */
 const agregarVenta = (dia, mes, anio, vendedora, sucursal, componentes) => {
     return ventas.push([
         obtenerIdVenta(),
@@ -89,5 +103,6 @@ module.exports = {
     agregarVenta,
     precioMaquina,
     cantidadVentasComponente,
-    verificarExistenciaComponente
+    verificarExistenciaComponente,
+    componenteMasVendido
 };
