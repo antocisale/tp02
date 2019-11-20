@@ -19,24 +19,36 @@ const obtenerIdVenta = () => {
     return IdVenta;
 };
 
-const controlVenta = (dia, mes, anio, vendedora, sucursal, componentes) => {
-    if ((dia === undefined) || (mes === undefined) || (anio === undefined) || 
-     (vendedora === undefined) || (sucursal === undefined) || (componentes === undefined)){
-        throw "Deben completarse todos los datos de la venta."
-    };
+const requerido = () => {
+    throw `Error - Completar todos los datos de la venta.`;
 };
 
-const controlVendedora = (vendedor) =>{
-    for (let index of vendedoras){
-        return index == vendedor;
+const letraCapital =(nombre) =>{
+    let palabra = nombre.toLowerCase();
+        palabra = palabra[0].toUpperCase() + palabra.slice(1);
+        return palabra;
+}
+
+const controlVendedora = (vendedor) => {
+    let vendedoraCapital = letraCapital(vendedor);
+    for (let index of vendedoras) {
+        if (index == vendedoraCapital){
+            return vendedoraCapital;
+        };
     }
-    if(index == false){
-        throw "Vendedor no registrado.";
-    } else{
-        return index;
-    }
+    throw "Vendedor no registrado.";
 };
 
+const controlSucursal = (sucursal) => {
+    let sucursalCapital = letraCapital(sucursal);
+    for (let index of sucursales) {
+        if (index == sucursalCapital){
+            return sucursalCapital;
+        };
+        
+    }throw "Sucursal no encontrada.";
+    
+};
 /*const controlFecha = (dia, mes, anio) => {
     let hoy = newDate();
     let anioHoy = hoy.getFullYear();
@@ -49,19 +61,18 @@ const controlVendedora = (vendedor) =>{
     throw "La fecha introducida es mayor a hoy."
 };*/
 
-const agregarVenta = (dia, mes, anio, vendedora, sucursal, componentes) => {
+const agregarVenta = (dia = requerido(), mes = requerido(), anio = requerido(), vendedora = requerido(), sucursal = requerido(), componentes = requerido()) => {
     //controlVenta(dia, mes, anio, vendedora, sucursal, componentes);
-    controlVendedora(vendedora);
+    let vendedoraAgregar = controlVendedora(vendedora);
+    let sucursalAgregar = controlSucursal(sucursal);
     //controlFecha(dia, mes, anio);
-    let vendedoraCapital = vendedora.charAt(0).toUpperCase() + vendedora.slice(1);
-    let sucursalCapital = sucursal.charAt(0).toUpperCase() + sucursal.slice(1);
     return ventas.push([
         obtenerIdVenta(),
         dia,
         mes,
         anio,
-        vendedoraCapital,
-        sucursalCapital,
+        vendedoraAgregar,
+        sucursalAgregar,
         [componentes]
     ])
 };
@@ -78,5 +89,5 @@ module.exports = {
     sucursales,
     ventas,
     obtenerIdVenta,
-    agregarVenta
+    agregarVenta, 
 };
