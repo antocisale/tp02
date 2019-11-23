@@ -59,16 +59,17 @@ const verificarExistenciaComponente = (componente) => {
     return false
 }
 
-const controlComponente = (...rest) =>{
-    let articulosComprados = [];
-    for(let articulo of [...rest]){
-        verificarExistenciaComponente(articulo);
-        if (!verificarExistenciaComponente(articulo)) {
-            return "Articulo no Existe."
-        }
-        return articulosComprados.push(articulo);
-    }  
-}
+const controlComponente = (...componente) =>{
+    let articulosComprados = {};
+    for (let i=0; i < componente.length; i++) {
+     verificarExistenciaComponente(componente[i]);
+     if (!verificarExistenciaComponente([componente][i])) {
+         return "Articulo no Existe."
+     }
+     return articulosComprados.push([componente][i]);
+     }  
+  }
+ 
 /*const controlFecha = (dia, mes, anio) => {
     let hoy = newDate();
     let anioHoy = hoy.getFullYear();
