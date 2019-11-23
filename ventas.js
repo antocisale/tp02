@@ -12,7 +12,7 @@ const vendedoras = ["Ada", "Grace", "Hedy", "Sheryl"],
     ],
     sucursales = ['Centro', 'Caballito'];
 
-let ventas = [];
+let ventas=[];
 
 const obtenerIdVenta = () => {
     let IdVenta = Math.floor(Math.random() * (1000000000 - 100000000) + 100000000);
@@ -31,13 +31,12 @@ const letraCapital =(nombre) =>{
 
 const controlVendedora = (vendedor) => {
     let vendedoraCapital = letraCapital(vendedor);
-    for (let index of vendedoras) {
-        if (index == vendedoraCapital){
-            return vendedoraCapital;
-        };
-    }
+    let index = vendedoras.indexOf(vendedoraCapital);
+    if(index > -1){
+        return vendedoraCapital;
+    };
     throw "Vendedor no registrado.";
-};
+}
 
 const controlSucursal = (sucursal) => {
     let sucursalCapital = letraCapital(sucursal);
@@ -49,6 +48,27 @@ const controlSucursal = (sucursal) => {
     }throw "Sucursal no encontrada.";
     
 };
+
+const verificarExistenciaComponente = (componente) => {
+    const existeArticulo = precios.findIndex((articulo) => {
+        return articulo[0] == componente
+    })
+    if (existeArticulo >= 0) {
+        return true
+    }
+    return false
+}
+
+const controlComponente = (...rest) =>{
+    let articulosComprados = [];
+    for(let articulo of [...rest]){
+        verificarExistenciaComponente(articulo);
+        if (!verificarExistenciaComponente(articulo)) {
+            return "Articulo no Existe."
+        }
+        return articulosComprados.push(articulo);
+    }  
+}
 /*const controlFecha = (dia, mes, anio) => {
     let hoy = newDate();
     let anioHoy = hoy.getFullYear();
@@ -61,10 +81,11 @@ const controlSucursal = (sucursal) => {
     throw "La fecha introducida es mayor a hoy."
 };*/
 
-const agregarVenta = (dia = requerido(), mes = requerido(), anio = requerido(), vendedora = requerido(), sucursal = requerido(), componentes = requerido()) => {
+const agregarVenta = (dia = requerido(), mes = requerido(), anio = requerido(), vendedora = requerido(), sucursal = requerido(), ...componentes = requerido()) => {
     //controlVenta(dia, mes, anio, vendedora, sucursal, componentes);
     let vendedoraAgregar = controlVendedora(vendedora);
     let sucursalAgregar = controlSucursal(sucursal);
+    let componenteAgregar = controlComponente(componentes);
     //controlFecha(dia, mes, anio);
     return ventas.push([
         obtenerIdVenta(),
@@ -73,7 +94,7 @@ const agregarVenta = (dia = requerido(), mes = requerido(), anio = requerido(), 
         anio,
         vendedoraAgregar,
         sucursalAgregar,
-        [componentes]
+        componenteAgregar
     ])
 };
 
@@ -84,10 +105,10 @@ const agregarVenta = (dia = requerido(), mes = requerido(), anio = requerido(), 
 
 
 module.exports = {
+    ventas,
     vendedoras,
     precios,
     sucursales,
-    ventas,
     obtenerIdVenta,
     agregarVenta, 
 };
