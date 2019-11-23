@@ -12,7 +12,7 @@ const vendedoras = ["Ada", "Grace", "Hedy", "Sheryl"],
     ],
     sucursales = ['Centro', 'Caballito'];
 
-let ventas = [];
+const ventas = [];
 
 const obtenerIdVenta = () => {
     let IdVenta = Math.floor(Math.random() * (1000000000 - 100000000) + 100000000);
