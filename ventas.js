@@ -65,6 +65,7 @@ const verificarExistenciaComponente = (componente) => {
     return false
 };
 
+ // FUNCION SACADA DEL EJERCICIO DE LIGIA
 const controlComponente = (componente) => {
     if (componente[0] != null) {
         for (let i = 0; i < componente.length; i++) {
@@ -78,6 +79,7 @@ const controlComponente = (componente) => {
     }
     throw "Error en carga de producto, debe completar los componetes vendidos."
 };
+/////////////////////////////////////////////////////////////////
 
 const controlFecha = (dia, mes, anio) => {
     requerido(dia);
