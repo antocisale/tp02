@@ -3,7 +3,6 @@ const localPc = require('./ventas'),
     ventas = localPc.ventas,
     obtenerIdVenta = localPc.obtenerIdVenta;
 
-   
 
 describe('pruebas en agregar venta sin numero random', () => {
     beforeEach(() => {
@@ -48,14 +47,14 @@ test('chequear que todos los parametros esten completos - version 2', () => {
 
 test('escribir sucursal que no coincida con una existente, y tire error', () => {
     expect(() => {
-        agregarVenta(15, 12, 2018, "ada", "Flores", 'Monitor GPRS 3000')
+            agregarVenta(15, 12, 2018, "ada", "Flores", 'Monitor GPRS 3000')
         })
         .toThrow("Sucursal no encontrada.")
 });
 
 test('chequear que el parametro nombre coincida con una vendedora, sino tire error', () => {
     expect(() => {
-        agregarVenta(15, 12, 2018, "Antonella", "Caballito", 'Monitor GPRS 3000')
+            agregarVenta(15, 12, 2018, "Antonella", "Caballito", 'Monitor GPRS 3000')
         })
         .toThrow('Vendedor no registrado.')
 });
@@ -66,27 +65,34 @@ test('escribir nombre de vendedora en mayusculas y que se agregue venta igual', 
 });
 
 
-test('chequear que el parametro componente coincida con una en el stock', () =>{
+test('chequear que el parametro componente coincida con una en el stock', () => {
     agregarVenta(22, 2, 2019, "Hedy", "Centro", 'RAM Quinston');
     expect(ventas[0][6]).toStrictEqual(["RAM Quinston"]);
 });
 
-test('chequear que el parametro componente coincida con una en el stock', () =>{
-expect(()=>{agregarVenta(23, 2, 2018, "Ada", "Caballito", 'RAM PRUEBA')}).toThrow("Articulo no Existe")
+test('chequear que el parametro componente coincida con una en el stock', () => {
+    expect(() => {
+        agregarVenta(23, 2, 2018, "Ada", "Caballito", 'RAM PRUEBA')
+    }).toThrow("Articulo no Existe")
 });
 
-test('chequear que el push permita subir varios productos en una misma venta', () =>{
-    agregarVenta(22, 2, 2019, "Hedy", "Centro", 'RAM Quinston', "Monitor GPRS 3000" );
+test('chequear que el push permita subir varios productos en una misma venta', () => {
+    agregarVenta(22, 2, 2019, "Hedy", "Centro", 'RAM Quinston', "Monitor GPRS 3000");
     expect(ventas[0][6]).toStrictEqual(["RAM Quinston", "Monitor GPRS 3000"]);
 });
 
 
-beforeEach(() => {
-    localPc.ventas.splice(0);
-
+test('chequear que la fecha no superea al dia de hoy', () => {
+    agregarVenta(22, 2, 2019, "Hedy", "Centro", 'RAM Quinston', "Monitor GPRS 3000");
+    expect(ventas[0]).toHaveLength(7);
 });
 
+test('chequear que la fecha si supera el dia de hoy tire error', () => {
+    expect(() => {
+        agregarVenta(22, 12, 2019, "Hedy", "Centro", 'RAM Quinston', "Monitor GPRS 3000");
+    }).toThrow("Error - la fecha ingresada es mayor al día actual.");
+});
 
-
-
-test.todo('chequear que la fecha no superea al dia de hoy');
+beforeEach(() => {
+    localPc.ventas.splice(0);
+});

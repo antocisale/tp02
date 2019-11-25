@@ -20,7 +20,7 @@ const obtenerIdVenta = () => {
 };
 
 const requerido = (detalle) => {
-    if ((detalle == undefined) ||(detalle =="")) {
+    if ((detalle == undefined) || (detalle == "")) {
         throw `Error - Completar todos los datos de la venta.`;
     }
     return detalle;
@@ -30,7 +30,7 @@ const letraCapital = (nombre) => {
     let palabra = nombre.toLowerCase();
     palabra = palabra[0].toUpperCase() + palabra.slice(1);
     return palabra;
-}
+};
 
 const controlVendedora = (vendedor) => {
     requerido(vendedor);
@@ -40,7 +40,7 @@ const controlVendedora = (vendedor) => {
         return vendedoraCapital;
     };
     throw "Vendedor no registrado.";
-}
+};
 
 const controlSucursal = (sucursal) => {
     requerido(sucursal);
@@ -63,14 +63,13 @@ const verificarExistenciaComponente = (componente) => {
         return true
     }
     return false
-}
+};
 
 const controlComponente = (componente) => {
-    if(componente[0] != null){
+    if (componente[0] != null) {
         for (let i = 0; i < componente.length; i++) {
             verificarExistenciaComponente(componente[i])
             if (!verificarExistenciaComponente(componente[i])) {
-                ;
                 throw "Articulo no Existe";
             }
 
@@ -78,42 +77,54 @@ const controlComponente = (componente) => {
         return componente;
     }
     throw "Error en carga de producto, debe completar los componetes vendidos."
-}
-
-const agregarVenta = (dia, mes, anio, vendedora, sucursal, ...componentes) => {
-        let diaAgregar = requerido(dia);
-        let mesAgregar = requerido(mes);
-        let anioAgregar = requerido(anio);
-        let vendedoraAgregar = controlVendedora(vendedora);
-        let sucursalAgregar = controlSucursal(sucursal);
-        let componenteAgregar = controlComponente(componentes);
-        //controlFecha(dia, mes, anio);
-        return ventas.push([
-            obtenerIdVenta(),
-            diaAgregar,
-            mesAgregar,
-            anioAgregar,
-            vendedoraAgregar,
-            sucursalAgregar,
-            componenteAgregar
-        ]);
 };
 
-/*const controlFecha = (dia, mes, anio) => {
-    let hoy = newDate();
-    let anioHoy = hoy.getFullYear();
-    let mesHoy = hoy.getMonth();
-    let diaHoy = hoy.getDay();
+const controlFecha = (dia, mes, anio) => {
+    requerido(dia);
+    requerido(mes);
+    requerido(anio);
+    let hoy = new Date();
+    let fechaVenta = new Date(anio, mes - 1, dia);
+    if (hoy > fechaVenta) {
+        return fechaVenta;
+    }
+    throw "Error - la fecha ingresada es mayor al día actual."
+}
 
-    if (anio <= anioHoy){
-        return anio;
-    }else if ()
-    throw "La fecha introducida es mayor a hoy."
-};*/
+const diaControl = (dia, mes, anio) => {
+    let fechaOk = controlFecha(dia, mes, anio);
+    return diaOk = fechaOk.getDate();
+}
 
-/*componentes (un array Strings con el nombre de cada componente vendido)*/
+const mesControl = (dia, mes, anio) => {
+    let fechaOk = controlFecha(dia, mes, anio);
+    return mesOk = fechaOk.getMonth() + 1;
+}
+
+const anioControl = (dia, mes, anio) => {
+    let fechaOk = controlFecha(dia, mes, anio);
+    return anioOk = fechaOk.getFullYear();
+}
 
 
+
+const agregarVenta = (dia, mes, anio, vendedora, sucursal, ...componentes) => {
+    let diaAgregar = diaControl(dia, mes, anio);
+    let mesAgregar = mesControl(dia, mes, anio);
+    let anioAgregar = anioControl(dia, mes, anio);
+    let vendedoraAgregar = controlVendedora(vendedora);
+    let sucursalAgregar = controlSucursal(sucursal);
+    let componenteAgregar = controlComponente(componentes);
+    return ventas.push([
+        obtenerIdVenta(),
+        diaAgregar,
+        mesAgregar,
+        anioAgregar,
+        vendedoraAgregar,
+        sucursalAgregar,
+        componenteAgregar
+    ]);
+};
 
 
 module.exports = {
