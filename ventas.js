@@ -87,41 +87,23 @@ const controlFecha = (dia, mes, anio) => {
     requerido(anio);
     let hoy = new Date();
     let fechaVenta = new Date(anio, mes - 1, dia);
-    if (hoy > fechaVenta) {
-        return fechaVenta;
+    if (hoy < fechaVenta) {
+        throw "Error - la fecha ingresada es mayor al día actual."
     }
-    throw "Error - la fecha ingresada es mayor al día actual."
-}
-
-const diaControl = (dia, mes, anio) => {
-    let fechaOk = controlFecha(dia, mes, anio);
-    return diaOk = fechaOk.getDate();
-}
-
-const mesControl = (dia, mes, anio) => {
-    let fechaOk = controlFecha(dia, mes, anio);
-    return mesOk = fechaOk.getMonth() + 1;
-}
-
-const anioControl = (dia, mes, anio) => {
-    let fechaOk = controlFecha(dia, mes, anio);
-    return anioOk = fechaOk.getFullYear();
-}
+};
 
 
 
 const agregarVenta = (dia, mes, anio, vendedora, sucursal, ...componentes) => {
-    let diaAgregar = diaControl(dia, mes, anio);
-    let mesAgregar = mesControl(dia, mes, anio);
-    let anioAgregar = anioControl(dia, mes, anio);
+    controlFecha(dia,mes,anio);
     let vendedoraAgregar = controlVendedora(vendedora);
     let sucursalAgregar = controlSucursal(sucursal);
     let componenteAgregar = controlComponente(componentes);
     return ventas.push([
         obtenerIdVenta(),
-        diaAgregar,
-        mesAgregar,
-        anioAgregar,
+        dia,
+        mes,
+        anio,
         vendedoraAgregar,
         sucursalAgregar,
         componenteAgregar
