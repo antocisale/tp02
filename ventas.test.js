@@ -1,6 +1,7 @@
 const localPc = require('./ventas'),
     agregarVenta = localPc.agregarVenta,
     ventas = localPc.ventas,
+    ventaPromedio = localPc.ventaPromedio,
     obtenerIdVenta = localPc.obtenerIdVenta;
 
 
@@ -91,6 +92,12 @@ test('chequear que la fecha si supera el dia de hoy tire error', () => {
     expect(() => {
         agregarVenta(22, 12, 2019, "Hedy", "Centro", 'RAM Quinston', "Monitor GPRS 3000");
     }).toThrow("Error - la fecha ingresada es mayor al día actual.");
+});
+
+test('chequear que la venta promedio de todas las ventas sea 367 ',()=>{
+    agregarVenta(22, 10, 2019, "Hedy", "Centro", 'RAM Quinston', "Monitor GPRS 3000");
+    agregarVenta(22, 2, 2019, "Ada", "Caballito", 'Motherboard ASUS 1500', 'HDD Wezter Dishital','RAM Quinston Fury');
+    expect(ventaPromedio()).toBe(367)
 });
 
 beforeEach(() => {

@@ -14,10 +14,14 @@ const vendedoras = ["Ada", "Grace", "Hedy", "Sheryl"],
 
 const ventas = [];
 
+
+////////////////////////////////// OBTENER ID DE VENTA ////////////////////////////////////////
 const obtenerIdVenta = () => {
     let IdVenta = Math.floor(Math.random() * (1000000000 - 100000000) + 100000000);
     return IdVenta;
 };
+
+////////////////////////////////// AGREGAR VENTA Y SUS VERIFICACIONES ///////////////////////////////
 
 const requerido = (detalle) => {
     if ((detalle == undefined) || (detalle == "")) {
@@ -65,7 +69,7 @@ const verificarExistenciaComponente = (componente) => {
     return false
 };
 
- // FUNCION SACADA DEL EJERCICIO DE LIGIA
+
 const controlComponente = (componente) => {
     if (componente[0] != null) {
         for (let i = 0; i < componente.length; i++) {
@@ -79,7 +83,7 @@ const controlComponente = (componente) => {
     }
     throw "Error en carga de producto, debe completar los componetes vendidos."
 };
-/////////////////////////////////////////////////////////////////
+
 
 const controlFecha = (dia, mes, anio) => {
     requerido(dia);
@@ -110,6 +114,21 @@ const agregarVenta = (dia, mes, anio, vendedora, sucursal, ...componentes) => {
     ]);
 };
 
+//////////////////////////////////  PROMEDIO DE VENTAS //////////////////////////////////
+
+const totalVentas =() =>{
+    let suma=0;
+    for (let venta of ventas){
+        for(let i=0;i<venta[6].length;i++) for(let k=0;k<precios.length;k++){
+            if(venta[6][i] == precios[k][0]){
+                suma+=precios[k][1]}}}
+    return suma;
+}
+
+const ventaPromedio = ()=>{
+    let suma = totalVentas();
+    return Math.floor(suma/ventas.length);};
+
 
 module.exports = {
     ventas,
@@ -118,4 +137,5 @@ module.exports = {
     sucursales,
     obtenerIdVenta,
     agregarVenta,
+    ventaPromedio,
 };
