@@ -1,7 +1,13 @@
 const localPc = require('./ventas'),
     agregarVenta = localPc.agregarVenta,
     ventas = localPc.ventas,
-    obtenerIdVenta = localPc.obtenerIdVenta;
+    obtenerIdVenta = localPc.obtenerIdVenta
+    vendedoras = localPc.vendedoras,
+    precios = localPc.precios,
+    sucursales = localPc.sucursales,
+    cantidadVentasComponente = localPc.cantidadVentasComponente,
+    verificarExistenciaComponente = localPc.verificarExistenciaComponente,
+    componenteMasVendido = localPc.componenteMasVendido;
 
 
 describe('pruebas en agregar venta sin numero random', () => {
