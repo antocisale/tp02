@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/antocisale/tp02/issues"
   },
-  "homepage": "https://github.com/antocisale/tp02#readme"
+  "homepage": "https://github.com/antocisale/tp02#readme",
+  "devDependencies": {
+    "jest": "^24.9.0"
+  }
 }

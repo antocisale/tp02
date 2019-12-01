@@ -2,12 +2,14 @@ const localPc = require('./ventas'),
     agregarVenta = localPc.agregarVenta,
     ventas = localPc.ventas,
     obtenerIdVenta = localPc.obtenerIdVenta
-    vendedoras = localPc.vendedoras,
+vendedoras = localPc.vendedoras,
     precios = localPc.precios,
     sucursales = localPc.sucursales,
     cantidadVentasComponente = localPc.cantidadVentasComponente,
     verificarExistenciaComponente = localPc.verificarExistenciaComponente,
-    componenteMasVendido = localPc.componenteMasVendido;
+    componenteMasVendido = localPc.componenteMasVendido,
+    ventasVendedora = localPc.ventasVendedora,
+    mejorVendedora = localPc.mejorVendedora;
 
 
 describe('pruebas en agregar venta sin numero random', () => {
@@ -53,15 +55,15 @@ test('chequear que todos los parametros esten completos - version 2', () => {
 
 test('escribir sucursal que no coincida con una existente, y tire error', () => {
     expect(() => {
-            agregarVenta(15, 12, 2018, "ada", "Flores", 'Monitor GPRS 3000')
-        })
+        agregarVenta(15, 12, 2018, "ada", "Flores", 'Monitor GPRS 3000')
+    })
         .toThrow("Sucursal no encontrada.")
 });
 
 test('chequear que el parametro nombre coincida con una vendedora, sino tire error', () => {
     expect(() => {
-            agregarVenta(15, 12, 2018, "Antonella", "Caballito", 'Monitor GPRS 3000')
-        })
+        agregarVenta(15, 12, 2018, "Antonella", "Caballito", 'Monitor GPRS 3000')
+    })
         .toThrow('Vendedor no registrado.')
 });
 
@@ -102,3 +104,70 @@ test('chequear que la fecha si supera el dia de hoy tire error', () => {
 beforeEach(() => {
     localPc.ventas.splice(0);
 });
+
+
+describe('Verificar existencia de un componente', () => {
+
+    test('existe', () => {
+        expect(verificarExistenciaComponente('Monitor GPRS 3000')).toBe(true)
+    });
+
+    test('NO existe', () => {
+        expect(verificarExistenciaComponente('Audifonos Razer 9800')).toBe(false)
+    });
+});
+
+
+describe('Calcular ventas de un componente', () => {
+
+    test('Calcular cantidad de ventas de un componente', () => {
+        ventas.push([100000005, 21, 3, 2019, 'Hedy', 'Caballito', ['Monitor ASC 543', 'Motherboard ASUS 1200', 'RAM Quinston']])
+        expect(cantidadVentasComponente('Monitor ASC 543')).toBe(1)
+    });
+    test('Componente existe, pero no tiene ventas y debe dar 0', () => {
+        expect(cantidadVentasComponente('Monitor GPRS 3000')).toBe(0)
+    });
+    test('El componente no existe y da error', () => {
+        expect(() => {
+            cantidadVentasComponente('Audifonitos')
+        }).toThrow('Articulo no Existe.')
+    });
+
+});
+
+describe('Componente más vendido, si existe venta, me dice cual es el componente', () => {
+
+    test('Si venta está vacio', () => {
+        expect(componenteMasVendido()).toBe("")
+    });
+    test('Si hay venta me dice cual es el componente más vendido', () => {
+        ventas.push([100000000, 4, 2, 2019, 'Grace', 'Centro', ['Monitor GPRS 3000', 'Motherboard ASUS 1500']],
+        [100000001, 1, 1, 2019, 'Ada', 'Centro', ['Monitor GPRS 3000', 'Motherboard ASUS 1500']],
+        [100000002, 2, 1, 2019, 'Grace', 'Caballito', ['Monitor ASC 543', 'Motherboard MZI', 'HDD Toyiva']],
+        [100000003, 10, 1, 2019, 'Ada', 'Centro', ['Monitor ASC 543', 'Motherboard ASUS 1200']],
+        [100000004, 12, 1, 2019, 'Grace', 'Caballito', ['Monitor GPRS 3000', 'Motherboard ASUS 1200']],
+        [100000005, 21, 3, 2019, 'Hedy', 'Caballito', ['Monitor ASC 543', 'Motherboard ASUS 1200', 'RAM Quinston']]
+        )
+        expect(componenteMasVendido()).toBe('Monitor GPRS 3000')
+    });
+});
+
+describe('Me dice el nombre de la mejor vendedora, si existen las ventas', () => {
+ 
+    test('Si venta está vacio', () => {
+        expect(mejorVendedora()).toBe("")
+    });
+    test('Si hay venta me dice el nombre de la mejor vendedora', () => {
+        ventas.push([100000000, 4, 2, 2019, 'Grace', 'Centro', ['Monitor GPRS 3000', 'Motherboard ASUS 1500']],
+        [100000001, 1, 1, 2019, 'Ada', 'Centro', ['Monitor GPRS 3000', 'Motherboard ASUS 1500']],
+        [100000002, 2, 1, 2019, 'Grace', 'Caballito', ['Monitor ASC 543', 'Motherboard MZI', 'HDD Toyiva']],
+        [100000003, 10, 1, 2019, 'Ada', 'Centro', ['Monitor ASC 543', 'Motherboard ASUS 1200']],
+        [100000004, 12, 1, 2019, 'Grace', 'Caballito', ['Monitor GPRS 3000', 'Motherboard ASUS 1200']],
+        [100000005, 21, 3, 2019, 'Hedy', 'Caballito', ['Monitor ASC 543', 'Motherboard ASUS 1200', 'RAM Quinston']]
+        )
+        expect(mejorVendedora()).toBe('Grace')
+    });
+
+});
+
+
