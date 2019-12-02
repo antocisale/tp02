@@ -12,54 +12,85 @@ const vendedoras = ["Ada", "Grace", "Hedy", "Sheryl"],
     ],
     sucursales = ['Centro', 'Caballito'];
 
-const ventas = [];
+ const ventas = [];
 
 
-/* Funcion 1*/
-
-/* Funcion 2 */
 ///////////////////////////////////// CANTIDAD DE VENTAS COMPONENTE ////////////////////////////////////////
 const verificarExistenciaComponente = (componente) => {
     const existeArticulo = precios.findIndex((articulo) => {
-        return articulo[0] == componente
+        return articulo[0] == componente;
     })
     if (existeArticulo >= 0) {
-        return true
+        return true;
     }
-    return false
-}
+    return false;
+};
 
 const cantidadVentasComponente = (componente) => {
-    let cantidad = 0
+    let cantidad = 0;
     if (!verificarExistenciaComponente(componente)) {
-        return "Articulo no Existe."
+       throw "Articulo no Existe.";
     }
     ventas.forEach(venta => {
         const encuentra = venta[6].filter((articulo) => {
-            return articulo == componente
+            return articulo == componente;
         });
         cantidad = cantidad + encuentra.length;
     })
     return cantidad;
-}
+};
 
 /////////////////////////////////////////// COMPONENTE MAS VENDIDO ///////////////////////////////////////////
 
 const componenteMasVendido = () => {
-    let mayor = 0
-    let nombre = " "
+    let mayor = 0;
+    let nombre = "";
     precios.forEach(item => {
         const componenteVendido = cantidadVentasComponente(item[0]);
         if (componenteVendido > mayor) {
-            mayor = componenteVendido
-            nombre = item[0]
+            mayor = componenteVendido;
+            nombre = item[0];
         }
     })
-    return nombre
-}
+    return nombre;
+};
 
-/* Funcion 3 */
+//////////////////////////////// CANTIDAD VENTAS VENDEDORA ////////////////////////////////////
+///// Esta parte es de Macarena, pero como usaré su función, la agrego.
 
+const ventasVendedora = (nombre) => {
+    controlVendedora(nombre);
+    let totalVentas = 0;
+    for (let i = 0; i < ventas.length; i++) {
+        if (ventas[i][4] == nombre) {
+            for (let e = 0; e < ventas.length; e++) {
+                for (let x = 0; x < precios.length; x++) {
+                    if (precios[x][0] == ventas[i][6][e]) {
+                        totalVentas += precios[x][1]
+                    }
+                }
+            }
+        }
+    }
+    return (totalVentas);
+};
+
+
+
+/////////////////////////////////////////////// MEJOR VENDEDORA //////////////////////////////////////////
+
+const mejorVendedora = () => {
+    let mejor = 0;
+    let vendedora = "";
+    vendedoras.forEach(nombre => {
+        const totalVentas = ventasVendedora(nombre);
+        if (totalVentas > mejor) {
+            mejor = totalVentas;
+            vendedora = nombre;
+        }
+    })
+    return vendedora;
+};
 
 /////////////////////////////////////////////// OBTENER ID VENTA //////////////////////////////////////////
 const obtenerIdVenta = () => {
@@ -134,7 +165,7 @@ const controlFecha = (dia, mes, anio) => {
 
 
 const agregarVenta = (dia, mes, anio, vendedora, sucursal, ...componentes) => {
-    controlFecha(dia,mes,anio);
+    controlFecha(dia, mes, anio);
     let vendedoraAgregar = controlVendedora(vendedora);
     let sucursalAgregar = controlSucursal(sucursal);
     let componenteAgregar = controlComponente(componentes);
@@ -166,14 +197,16 @@ const ventaPromedio = ()=>{
 
 
 module.exports = {
-    ventas,
-    vendedoras,
-    precios,
-    sucursales,
-    obtenerIdVenta,
     agregarVenta,
     ventaPromedio,
     cantidadVentasComponente,
+    componenteMasVendido,
+    mejorVendedora,
+    obtenerIdVenta,
+    precios,
+    sucursales,
+    vendedoras,
+    ventas,
+    ventasVendedora,
     verificarExistenciaComponente,
-    componenteMasVendido
 };
