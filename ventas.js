@@ -149,6 +149,21 @@ const agregarVenta = (dia, mes, anio, vendedora, sucursal, ...componentes) => {
     ]);
 };
 
+//////////////////////////////////  PROMEDIO DE VENTAS //////////////////////////////////
+
+const totalVentas =() =>{
+    let suma=0;
+    for (let venta of ventas){
+        for(let i=0;i<venta[6].length;i++) for(let k=0;k<precios.length;k++){
+            if(venta[6][i] == precios[k][0]){
+                suma+=precios[k][1]}}}
+    return suma;
+}
+
+const ventaPromedio = ()=>{
+    let suma = totalVentas();
+    return Math.floor(suma/ventas.length);};
+
 
 module.exports = {
     ventas,
@@ -157,6 +172,7 @@ module.exports = {
     sucursales,
     obtenerIdVenta,
     agregarVenta,
+    ventaPromedio,
     cantidadVentasComponente,
     verificarExistenciaComponente,
     componenteMasVendido
