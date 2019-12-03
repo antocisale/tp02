@@ -71,7 +71,6 @@ const componenteMasVendido = () => {
 };
 
 //////////////////////////////// CANTIDAD VENTAS VENDEDORA ////////////////////////////////////
-///// Esta parte es de Macarena, pero como usaré su función, la agrego.
 
 const ventasVendedora = (nombre) => {
     controlVendedora(nombre);
