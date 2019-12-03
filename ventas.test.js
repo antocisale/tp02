@@ -10,6 +10,8 @@ const localPc = require('./ventas'),
     verificarExistenciaComponente = localPc.verificarExistenciaComponente,
     componenteMasVendido = localPc.componenteMasVendido,
     ventasVendedora = localPc.ventasVendedora,
+    precioMaquina = localPc.precioMaquina,
+    ventasSucursal = localPc.ventasSucursal,
     mejorVendedora = localPc.mejorVendedora;
 
 
@@ -177,4 +179,30 @@ describe('Me dice el nombre de la mejor vendedora, si existen las ventas', () =>
 
 });
 
+test ("precioMaquina devuelve precio de la maquina", () => {
+    const componentes =  ['Monitor GPRS 3000', 'Motherboard ASUS 1500'];
+    expect(precioMaquina(componentes)).toBe(320);
+});
 
+test("ventasVendedora devuelve importe total de ventas", () => {
+   ventas.push([100000000, 4, 2, 2019, 'Grace', 'Centro', ['Monitor GPRS 3000', 'Motherboard ASUS 1500']],
+   [100000001, 1, 1, 2019, 'Ada', 'Centro', ['Monitor GPRS 3000', 'Motherboard ASUS 1500']],
+   [100000002, 2, 1, 2019, 'Grace', 'Caballito', ['Monitor ASC 543', 'Motherboard MZI', 'HDD Toyiva']],
+   [100000003, 10, 1, 2019, 'Ada', 'Centro', ['Monitor ASC 543', 'Motherboard ASUS 1200']],
+   [100000004, 12, 1, 2019, 'Grace', 'Caballito', ['Monitor GPRS 3000', 'Motherboard ASUS 1200']],
+   [100000005, 21, 3, 2019, 'Hedy', 'Caballito', ['Monitor ASC 543', 'Motherboard ASUS 1200', 'RAM Quinston']]
+   );
+   expect(ventasVendedora("Grace")).toBe(990.00);
+});
+
+
+test("ventasSucursal devuelve suma de todas las ventas de la Sucursal", () => {
+    ventas.push([100000000, 4, 2, 2019, 'Grace', 'Centro', ['Monitor GPRS 3000', 'Motherboard ASUS 1500']],
+    [100000001, 1, 1, 2019, 'Ada', 'Centro', ['Monitor GPRS 3000', 'Motherboard ASUS 1500']],
+    [100000002, 2, 1, 2019, 'Grace', 'Caballito', ['Monitor ASC 543', 'Motherboard MZI', 'HDD Toyiva']],
+    [100000003, 10, 1, 2019, 'Ada', 'Centro', ['Monitor ASC 543', 'Motherboard ASUS 1200']],
+    [100000004, 12, 1, 2019, 'Grace', 'Caballito', ['Monitor GPRS 3000', 'Motherboard ASUS 1200']],
+    [100000005, 21, 3, 2019, 'Hedy', 'Caballito', ['Monitor ASC 543', 'Motherboard ASUS 1200', 'RAM Quinston']]
+    );
+   expect(ventasSucursal("Centro")).toBe(990);
+});

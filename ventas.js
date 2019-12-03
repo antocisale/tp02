@@ -14,6 +14,21 @@ const vendedoras = ["Ada", "Grace", "Hedy", "Sheryl"],
 
  const ventas = [];
 
+ //////////////////////////PRECIO MAQUINA//////////////////////
+
+ const precioMaquina = (componentes) => {
+    let  totalMaquina = 0;
+    for (componente of componentes) {
+        let precioComponente = precios.filter(precio => {
+          return precio[0] == componente;
+        }); 
+        totalMaquina += precioComponente[0][1];
+    };
+    return totalMaquina;
+};
+
+///////////////////////////////////////////////////////////////////
+
 
 ///////////////////////////////////// CANTIDAD DE VENTAS COMPONENTE ////////////////////////////////////////
 const verificarExistenciaComponente = (componente) => {
@@ -56,7 +71,6 @@ const componenteMasVendido = () => {
 };
 
 //////////////////////////////// CANTIDAD VENTAS VENDEDORA ////////////////////////////////////
-///// Esta parte es de Macarena, pero como usaré su función, la agrego.
 
 const ventasVendedora = (nombre) => {
     controlVendedora(nombre);
@@ -90,6 +104,24 @@ const mejorVendedora = () => {
         }
     })
     return vendedora;
+};
+
+//////////////////////////////////////VENTAS SUCURSAL///////////////////////////////////////
+
+const ventasSucursal = (sucursal) => {
+    let totalSucursal = 0;
+    for (let i=0; i<ventas.length;i++){
+        if (ventas[i][5] == sucursal) {
+            for (let e=0; e<ventas.length; e++) {
+              for (let x=0; x<precios.length; x++) {
+                  if (precios[x][0] == ventas[i][6][e]) {
+                      totalSucursal += precios [x][1]
+                  }
+              }
+            }
+        }
+    }
+    return (totalSucursal);
 };
 
 /////////////////////////////////////////////// OBTENER ID VENTA //////////////////////////////////////////
@@ -209,4 +241,6 @@ module.exports = {
     ventas,
     ventasVendedora,
     verificarExistenciaComponente,
+    precioMaquina,
+    ventasSucursal
 };
