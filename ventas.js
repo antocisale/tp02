@@ -47,9 +47,12 @@ const cantidadVentasComponente = (componente) => {
        throw "Articulo no Existe.";
     }
     ventas.forEach(venta => {
+        // el nombre de la variable debería ser más descriptivo.
+        // Que encuentra?
         const encuentra = venta[6].filter((articulo) => {
             return articulo == componente;
         });
+        // cantidad += encuentra.length
         cantidad = cantidad + encuentra.length;
     })
     return cantidad;
@@ -77,6 +80,7 @@ const ventasVendedora = (nombre) => {
     let totalVentas = 0;
     for (let i = 0; i < ventas.length; i++) {
         if (ventas[i][4] == nombre) {
+            // ventas[i][6].length
             for (let e = 0; e < ventas.length; e++) {
                 for (let x = 0; x < precios.length; x++) {
                     if (precios[x][0] == ventas[i][6][e]) {
@@ -86,6 +90,7 @@ const ventasVendedora = (nombre) => {
             }
         }
     }
+    // no son necesarios los parentesis
     return (totalVentas);
 };
 
@@ -112,6 +117,7 @@ const ventasSucursal = (sucursal) => {
     let totalSucursal = 0;
     for (let i=0; i<ventas.length;i++){
         if (ventas[i][5] == sucursal) {
+            // ventas[i][6]
             for (let e=0; e<ventas.length; e++) {
               for (let x=0; x<precios.length; x++) {
                   if (precios[x][0] == ventas[i][6][e]) {
@@ -121,6 +127,7 @@ const ventasSucursal = (sucursal) => {
             }
         }
     }
+    // no necesarios los parentesis
     return (totalSucursal);
 };
 
@@ -217,6 +224,8 @@ const agregarVenta = (dia, mes, anio, vendedora, sucursal, ...componentes) => {
 const totalVentas =() =>{
     let suma=0;
     for (let venta of ventas){
+        // Llaves. Aca esta muy confuso.Identar correctamente y agregar llaves para 
+        // legibilidad
         for(let i=0;i<venta[6].length;i++) for(let k=0;k<precios.length;k++){
             if(venta[6][i] == precios[k][0]){
                 suma+=precios[k][1]}}}

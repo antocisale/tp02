@@ -3,6 +3,7 @@ const localPc = require('./ventas'),
     ventas = localPc.ventas,
     ventaPromedio = localPc.ventaPromedio,
     obtenerIdVenta = localPc.obtenerIdVenta,
+    // Vendedoras, precios y sucursales no se usan. Borrar de aca.
     vendedoras = localPc.vendedoras,
     precios = localPc.precios,
     sucursales = localPc.sucursales,
@@ -17,6 +18,7 @@ const localPc = require('./ventas'),
 
 describe('pruebas en agregar venta sin numero random', () => {
     beforeEach(() => {
+        // <3
         jest.spyOn(global.Math, 'random').mockReturnValue(0.123456789);
         localPc.ventas.splice(0);
     });
